@@ -1,0 +1,5 @@
+# Buildroot:
+buildroot
+
+# Wifi config:
+wpa_supplicant.conf
