@@ -1,0 +1,31 @@
+#!/bin/sh
+
+
+start() {
+	printf "Starting ympd: "
+	start-stop-daemon --start --quiet --background --exec /usr/bin/ympd \
+		&& echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Stopping ympd: "
+	start-stop-daemon --stop --quiet --pidfile /var/run/ympd.pid \
+		&& echo "OK" || echo "FAIL"
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart|reload)
+		stop
+		sleep 1
+		start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac

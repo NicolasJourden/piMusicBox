@@ -1,0 +1,17 @@
+#!/bin/sh
+
+# Loop:
+while true; do
+    val=$(/usr/bin/mpc | grep playing)
+    if [ -z $val ]; then
+      # Not playing:
+      echo 0 > /sys/class/gpio/gpio22/value 
+
+    else
+      # Mostly playing:
+      echo 1 > /sys/class/gpio/gpio22/value 
+    fi
+
+    sleep 1
+done
+

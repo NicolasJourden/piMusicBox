@@ -1,0 +1,32 @@
+#!/bin/sh
+
+mkdir -p /var/lib/mpd/music/NAS
+
+start() {
+	printf "Mounting NAS : "
+        mount -t cifs //NAS/Audio /var/lib/mpd/music/NAS -o username=musicbox,password=musicbox,domain=WORKGROUP,ro \
+		&& echo "OK" || echo "FAIL"
+}
+
+stop() {
+	printf "Unounting NAS : "
+	umount /var/lib/mpd/music/NAS \
+		&& echo "OK" || echo "FAIL"
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart|reload)
+		stop
+		sleep 1
+		start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart}"
+		exit 1
+esac

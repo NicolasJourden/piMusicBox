@@ -1,0 +1,18 @@
+#! /bin/sh
+
+case "$1" in
+  start|"")
+	modprobe ath9k_htc
+	modprobe snd_usb_audio
+	modprobe i2c-dev
+	modprobe i2c-bcm2708
+	modprobe i2c_bcm2835 
+	;;
+  stop)
+	echo "Nothing to do."
+	;;
+  *)
+	echo "Usage: {start|stop}" >&2
+	exit 1
+	;;
+esac
