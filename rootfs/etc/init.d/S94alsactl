@@ -1,0 +1,29 @@
+#!/bin/sh
+
+#
+# Sets the sound output the way it should using 
+# using configuration in /etc/asound.state
+#
+
+case "$1" in
+  start)
+	printf "Setting sound ... "
+
+	alsactl -f /etc/asound.state restore
+	[ $? = 0 ] && echo "OK" || echo "FAIL"
+
+	;;
+  stop)
+	echo "Stopping sound: nothing to do."
+	;;
+  restart|reload)
+	"$0" stop
+	"$0" start
+	;;
+  *)
+	echo "Usage: $0 {start|stop|restart}"
+	exit 1
+esac
+
+exit $?
+
